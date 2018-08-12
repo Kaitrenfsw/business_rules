@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  db_business_rules:
+    image: postgres:9.6
+    networks:
+      - shared
+  business_rules:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    networks:
+      - shared      
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db_business_rules
+
+networks:
+  shared: 
+    external:
+      name: shared
