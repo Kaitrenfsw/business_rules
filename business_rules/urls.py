@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from topics import views as topic_views
+from user_preferences import views as user_preferences_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^topic/$', topic_views.topic_list, name='topic-API'),
 ]
