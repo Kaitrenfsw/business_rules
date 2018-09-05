@@ -21,4 +21,5 @@ from user_preferences import views as user_preferences_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^topic/$', topic_views.topic_list, name='topic-API'),
+    url(r'^ldamodel/$', topic_views.ldamodel_list, name='ldamodel-API'),
 ]
