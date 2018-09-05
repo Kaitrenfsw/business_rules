@@ -16,6 +16,8 @@ services:
       - "8001:8000"
     depends_on:
       - db_business_rules
+    networks:
+      - shared
 
 networks:
   shared: 
