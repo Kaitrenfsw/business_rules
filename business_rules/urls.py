@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^topic/$', topic_views.topic_list, name='topic-API'),
     url(r'^ldamodel/$', topic_views.ldamodel_list, name='ldamodel-API'),
+    url(r'^source/$', user_preferences_views.source_list, name='source-API'),
+    url(r'^topicUser/$', user_preferences_views.topicuser_list, name='topicUser-API')
 ]

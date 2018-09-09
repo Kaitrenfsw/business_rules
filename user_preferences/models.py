@@ -4,7 +4,7 @@ from topics.models import Topic
 # Create your models here.
 class TopicUser(models.Model):
     user_id = models.IntegerField(null=False)
-    topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='user_topic')
+    topic_id = models.IntegerField(null=False)
 
     class Meta:
         unique_together = ("user_id", "topic_id")
