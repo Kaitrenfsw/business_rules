@@ -20,14 +20,6 @@ class Keyword(models.Model):
     topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='keyword_topic')
 
 
-class TopicUser(models.Model):
-    user_id = models.IntegerField(null=False)
-    topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='user_topic')
-
-    class Meta:
-        unique_together = ("user_id", "topic_id")
-
-
 class TopicComparison(models.Model):
     topic1_id = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='topic1_topic2')
     topic2_id = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='topic2_topic1')
