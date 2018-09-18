@@ -15,13 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from rest_framework import routers
 from topics import views as topic_views
 from user_preferences import views as user_preferences_views
 
+
+router = routers.SimpleRouter()
+router.register(r'topic', topic_views.TopicViewSet)
+router.register(r'ldamodel', topic_views.LdaModelViewSet)
+router.register(r'source', user_preferences_views.SourceViewSet)
+router.register(r'topicUser', user_preferences_views.TopicUserViewSet)
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^topic/$', topic_views.topic_list, name='topic-API'),
-    url(r'^ldamodel/$', topic_views.ldamodel_list, name='ldamodel-API'),
-    url(r'^source/$', user_preferences_views.source_list, name='source-API'),
-    url(r'^topicUser/$', user_preferences_views.topicuser_list, name='topicUser-API')
 ]
+
+urlpatterns += router.urls
