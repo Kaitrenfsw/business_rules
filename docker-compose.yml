@@ -1,23 +1,23 @@
 version: '3'
 
 services:
-  db_business_rules:
+  db-business-rules:
     image: postgres:9.6
     networks:
       - shared
     ports:
       - "5433:5432"
-  business_rules:
+  business-rules:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: python3 manage.py runserver 0.0.0.0:8001
     volumes:
       - .:/code
     networks:
       - shared      
     ports:
-      - "8001:8000"
+      - "8001:8001"
     depends_on:
-      - db_business_rules
+      - db-business-rules
     networks:
       - shared
 
