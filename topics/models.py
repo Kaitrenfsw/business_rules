@@ -10,7 +10,7 @@ class LdaModel(models.Model):
 
 class Topic(models.Model):
     topic_number = models.IntegerField(null=False)
-    lda_model = models.ForeignKey(LdaModel, on_delete=models.CASCADE, related_name='topic_ldamodel')
+    lda_model_id = models.IntegerField(null=False, blank=True)
     name = models.CharField(null=True, blank=True, max_length=100)
 
 

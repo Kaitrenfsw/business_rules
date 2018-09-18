@@ -25,11 +25,19 @@ class TopicViewSet(viewsets.ViewSet):
 
     @staticmethod
     def create(request):
-        print("info received")
-        print(request.data)
-        #Topic(topic_number=3, name=request.data, lda_model_id=1).save()
-        response_status = status.HTTP_200_OK
-        return Response(data={"a"}, status=response_status)
+        serialized_data = TopicKeywordSerializer(data=request.data, many=True)
+        try:
+            if serialized_data.is_valid():
+                serialized_data.save()
+                response_message = {"Topics and keywords saved successfully!"}
+                response_status = status.HTTP_200_OK
+            else:
+                response_message = {"Wrong format data"}
+                response_status = status.HTTP_400_BAD_REQUEST
+        except Exception as e:
+            response_message = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_message, status=response_status)
 
     @staticmethod
     def retrieve(request, pk=None):
