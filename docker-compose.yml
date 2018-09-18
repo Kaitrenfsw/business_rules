@@ -5,6 +5,8 @@ services:
     image: postgres:9.6
     networks:
       - shared
+    ports:
+      - "5433:5432"
   business_rules:
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
