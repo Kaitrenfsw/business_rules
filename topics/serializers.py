@@ -5,7 +5,7 @@ from topics.models import LdaModel, Topic, Keyword, TopicComparison
 class LdaModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = LdaModel
-        fields = '__all__'
+        fields = ('id', 'filename', 'creation_date', 'newest', 'in_use',)
 
 
 class TopicSerializer(serializers.ModelSerializer):
