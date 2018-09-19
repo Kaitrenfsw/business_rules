@@ -74,14 +74,7 @@ class TopicUserViewSet(viewsets.ViewSet):
 
     @staticmethod
     def list(request):
-        try:
-            topics = TopicUser.objects.all()
-            response_message = TopicUserSerializer(topics, many=True).data
-            response_status = status.HTTP_200_OK
-        except Exception as e:
-            response_message = {"Exception raised": e}
-            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
-        return Response(data=response_message, status=response_status)
+        return Response(data={":)"})
 
     @staticmethod
     def create(request):
