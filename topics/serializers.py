@@ -27,14 +27,14 @@ class TopicComparisonSerializer(serializers.ModelSerializer):
 
 
 class TopicKeywordSerializer(serializers.ModelSerializer):
-    keywords = KeywordSerializer(many=True)
+    keyword_topic = KeywordSerializer(many=True)
 
     class Meta:
         model = Topic
-        fields = ('topic_number', 'lda_model_id', 'keywords',)
+        fields = ('id', 'topic_number', 'lda_model_id', 'keyword_topic',)
 
     def create(self, validated_data):
-        keywords_data = validated_data.pop('keywords')
+        keywords_data = validated_data.pop('keyword_topic')
         topic = Topic.objects.create(**validated_data)
         for keyword in keywords_data:
             Keyword.objects.create(topic_id=topic, **keyword)
