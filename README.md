@@ -9,11 +9,6 @@ Database: Postgres  9.5.12>=
 
 ``` $ docker-compose up```
 
-Run fixture in container to load data:
-
-``` docker-compose exec procesamiento python3 service_TM/manage.py loaddata service_TM/fixture.json```
-
-
 ### Linux/MacOS
 
 Install a virtualenv with python3 more info [here](https://rukbottoland.com/blog/tutorial-de-python-virtualenv/)
@@ -32,8 +27,6 @@ Run Migrations and fixture from service_TM folder:
 ``` python manage.py makemigrations ```
 
 ``` python manage.py migrate ```
-
-```python manage.py loaddata fixture.json```
 
 Run Django API from service_TM folder:
 
