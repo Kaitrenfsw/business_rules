@@ -40,7 +40,7 @@ Run Django API from service_TM folder:
 ``` $ python manage.py runserver ```
 
 
-#API Endpoints:
+#API Endpoints use via BFF:
 
 ##### Topic: [http://127.0.0.1:8000/topic/](http://127.0.0.1:8000/topic/)
 
@@ -96,22 +96,6 @@ Run Django API from service_TM folder:
     
 ]
 ``` 
-- methods allowed: POST
-- Request: 
-``` 
-{
-	"topic_number": 1,
-	"lda_model_filename": "lda_01_20000.model",
-	"topic_name": "topic1"
-}
-```
-- Response: Status message
-- Response format:
-```
-- HTTP_200_OK: {"New Topic added successfully"}
-- HTTP_500_INTERNAL_SERVER_ERROR: {<specific exception>}
-- HTTP_400_BAD_REQUEST: {"Bad Request, check sent parameters"}
-```
 
 ##### Topic: [http://127.0.0.1:8000/topic/pk](http://127.0.0.1:8000/topic/)
 
@@ -169,81 +153,39 @@ Run Django API from service_TM folder:
 ]
 ``` 
 
-##### TopicUser: [http://127.0.0.1:8000/topicUser/pk](http://127.0.0.1:8000/topicUser/)
+
+##### TopicUser: [http://127.0.0.1:8000/topicUser/pk/](http://127.0.0.1:8000/topicUser/)
 
 - methods allowed: GET
-- pk: user_id
+- pk: user id
 - request: empty
 
-- Response: All topics and keywords selected for a certain User
+- Response: All topics id subscribed by a certain user
 - Response format:
 ``` [
     {
-        "id": 1,
-        "topic_number": 0,
-        "lda_model": 1,
-        "name": null,
-        "keyword_topic": [
-            {
-                "id": 1,
-                "name": "ad",
-                "weight": 0.00999999977648258
-            },
-            {
-                "id": 2,
-                "name": "food",
-                "weight": 0.00999999977648258
-            },
-            ...
-        ]
+        "topic_id": 11
+    },
+    {
+        "topic_id": 12
     },
     ...
 ]
 ```
+##### TopicUser: [http://127.0.0.1:8000/topicUser/pk/](http://127.0.0.1:8000/topicUser/)
 
 - methods allowed: PUT
-- action: update topics related to certain user
-- Request: 
-``` 
-{
-	"user_id": 12
-	"user_topics_id": [1, 18]
+- pk: user id 
+- request: 
+``` {
+    "user_id": 1,
+    "user_topics_id": [11,12,13,14,15,16]
 }
 ```
-- Response: Status message
-- Response format:
-```
-- HTTP_200_OK: {"Topics updated successfully"}
-- HTTP_500_INTERNAL_SERVER_ERROR: {<specific exception>}
-- HTTP_400_BAD_REQUEST: {"Bad Request, check sent parameters"}
-```
-##### TopicUser: [http://127.0.0.1:8000/topicUser/](http://127.0.0.1:8000/topicUser/)
-
-- methods allowed: GET
-- request: empty
-
-- Response: All topics and keywords
-- Response format:
-``` [
-    {
-        "id": 1,
-        "topic_number": 0,
-        "lda_model": 1,
-        "name": null,
-        "keyword_topic": [
-            {
-                "id": 1,
-                "name": "ad",
-                "weight": 0.00999999977648258
-            },
-            {
-                "id": 2,
-                "name": "food",
-                "weight": 0.00999999977648258
-            },
-            ...
-        ]
-    },
-    ...
+- user_topics_id : topics subscribed after save last selection in UI
+- Response format: 
+``` ["Topics updated successfully!"] STATUS CODE 200
+    ["Bad Request, check sent parameters"] STATUS CODE 500
+    ["Exception raised": e] STATUS CODE 400   
 ]
 ```
