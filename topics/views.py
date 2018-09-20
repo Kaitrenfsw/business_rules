@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import LdaModel, Topic
-from .serializers import TopicKeywordSerializer, LdaModelSerializer
+from .serializers import TopicKeywordSerializer, LdaModelSerializer, TopicSerializer
 
 
 class TopicViewSet(viewsets.ViewSet):
@@ -49,7 +49,7 @@ class TopicViewSet(viewsets.ViewSet):
             response_status = status.HTTP_200_OK
         except Exception as e:
             response_json = {"Exception raised": e}
-            response_status = status.HTTP_404_NOT_FOUND
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 
         return Response(data=response_json, status=response_status)
 
@@ -100,12 +100,50 @@ class LdaModelViewSet(viewsets.ViewSet):
         return Response(data=response_message, status=response_status)
 
     @staticmethod
-    def retrieve(request):
+    def retrieve(request, pk=None):
         return Response(data={":)"})
 
     @staticmethod
     def update(request):
         return Response(data={"This is the PUT LDAModel method"})
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request):
+        return Response(data={":)"})
+
+
+class LdaModelTopicsViewSet(viewsets.ViewSet):
+    queryset = LdaModel.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        response_json = []
+        try:
+            topics = Topic.objects.filter(lda_model_id=pk)
+            serialized_topics = TopicSerializer(topics, many=True).data
+            response_json.append(serialized_topics)
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def update(request):
+        return Response(data={":)"})
 
     @staticmethod
     def partial_update(request):

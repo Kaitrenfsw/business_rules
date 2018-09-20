@@ -22,9 +22,9 @@ from user_preferences import views as user_preferences_views
 
 router = routers.SimpleRouter()
 router.register(r'topic', topic_views.TopicViewSet)
-router.register(r'ldamodel', topic_views.LdaModelViewSet)
 router.register(r'source', user_preferences_views.SourceViewSet)
 router.register(r'topicUser', user_preferences_views.TopicUserViewSet)
+router.register(r'ldamodelTopics', topic_views.LdaModelTopicsViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
