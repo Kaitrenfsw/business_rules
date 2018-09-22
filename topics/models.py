@@ -10,6 +10,7 @@ class LdaModel(models.Model):
 
 class Topic(models.Model):
     topic_number = models.IntegerField(null=False)
+    coherence = models.FloatField(default=0.5)
     lda_model_id = models.IntegerField(null=False, blank=True)
     name = models.CharField(null=True, blank=True, max_length=100)
 
