@@ -31,7 +31,7 @@ class TopicKeywordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Topic
-        fields = ('id', 'topic_number', 'lda_model_id', 'coherence', 'keyword_topic',)
+        fields = ('id', 'name', 'topic_number', 'lda_model_id', 'coherence', 'keyword_topic',)
 
     def create(self, validated_data):
         keywords_data = validated_data.pop('keyword_topic')
