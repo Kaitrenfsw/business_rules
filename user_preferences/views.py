@@ -1,7 +1,8 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Source, TopicUser, Topic
-from .serializers import SourceSerializer, TopicKeywordSerializer
+from .serializers import SourceSerializer
+from topics.serializers import TopicKeywordSerializer
 
 
 class SourceViewSet(viewsets.ViewSet):
