@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Source, TopicUser
-from .serializers import SourceSerializer, TopicUserSerializer
+from .models import Source, TopicUser, Topic
+from .serializers import SourceSerializer, TopicKeywordSerializer
 
 
 class SourceViewSet(viewsets.ViewSet):
@@ -83,13 +83,17 @@ class TopicUserViewSet(viewsets.ViewSet):
     @staticmethod
     def retrieve(request, pk=None):
         try:
-            user_topics_list = TopicUser.objects.filter(user_id=pk)
-            response_message = TopicUserSerializer(user_topics_list, many=True).data
+            user_topics = TopicUser.objects.filter(user_id=pk).values_list('topic_id')
+            topics = Topic.objects.filter(id__in=user_topics)
+            response_message = []
+            for topic in topics:
+                serialized_topic = TopicKeywordSerializer(topic).data
+                response_message.append(serialized_topic)
             response_status = status.HTTP_200_OK
         except Exception as e:
             response_message = {"Exception raised": e}
             response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
-        return Response(data=response_message, status=response_status)
+        return Response(data=response_message, status=response_status, content_type='application/json')
 
     @staticmethod
     def update(request, pk=None):
