@@ -25,7 +25,7 @@ SECRET_KEY = 'f4fzregw)jnba+4g59oz%2+f)q2_#0n6j@1p@0$ta^#*vq6@0s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # external libraries
+    'rest_framework',
+
+    # internal_apps
+    'topics',
+    'user_preferences',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +86,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'db_business_rules',
+        'HOST': 'db-business-rules',
         'PORT': 5432,
     }
 }
