@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # internal_apps
     'topics',
     'user_preferences',
+    'utils',
 ]
 
 MIDDLEWARE = [
