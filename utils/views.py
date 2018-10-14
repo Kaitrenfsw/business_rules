@@ -8,8 +8,7 @@ from datetime import datetime, timedelta
 class DateConversionViewSet(viewsets.ViewSet):
     queryset = DateConversion.objects.all()
 
-    lookup_field = 'date_value'
-    lookup_value_regex = '[-\w]+'
+    lookup_value_regex = '([0-9]{2})/([0-9]{2})/([0-9]{4})'
 
     @staticmethod
     def list(request):
@@ -44,10 +43,10 @@ class DateConversionViewSet(viewsets.ViewSet):
         return Response(data=response_json, status=response_status)
 
     @staticmethod
-    def retrieve(request, date_value=None):
+    def retrieve(request, pk=None):
         response_json = []
         try:
-            date_object = DateConversion.objects.get(date=date_value)
+            date_object = DateConversion.objects.get(date=pk)
             serialized_date_code = DateConversionSerializer(date_object).data
             response_json.append(serialized_date_code)
             response_status = status.HTTP_200_OK
