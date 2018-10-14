@@ -167,6 +167,12 @@ class DashboardUserViewSet(viewsets.ViewSet):
         response_status = status.HTTP_200_OK
         response_json = {"User preferences updated!"}
         try:
+            try:
+                dashboard_user_instance = DashboardUser.objects.get(user_id=pk)
+            except DashboardUser.DoesNotExist:
+                dashboard_user_instance = DashboardUser(user_id=pk)
+                dashboard_user_instance.save()
+
             if 'graphs_selected' in request.data:
                 # Delete older preferences
                 user_preferences = UserGraph.objects.filter(user_id=pk)
@@ -175,7 +181,6 @@ class DashboardUserViewSet(viewsets.ViewSet):
                 # Save new preferences
                 new_preferences = request.data
                 for graph_preference in new_preferences['graphs_selected']:
-                    dashboard_user_instance = DashboardUser.objects.get(user_id=pk)
                     new_user_graph = UserGraph(user_id=dashboard_user_instance,
                                                graph_type_id=graph_preference['graph_type'])
                     new_user_graph.save()
