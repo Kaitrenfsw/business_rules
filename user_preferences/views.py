@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Source, TopicUser, Topic
-from .serializers import SourceSerializer
+from .models import Source, TopicUser, Topic, DashboardUser
+from .serializers import SourceSerializer, DashboardUserSerializer
 from topics.serializers import TopicKeywordSerializer
 
 
@@ -124,6 +124,46 @@ class TopicUserViewSet(viewsets.ViewSet):
             response_status = status.HTTP_400_BAD_REQUEST
 
         return Response(data=response_message, status=response_status)
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request):
+        return Response(data={":)"})
+
+
+class DashboardUserViewSet(viewsets.ViewSet):
+    queryset = DashboardUser.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        preferences = DashboardUser.objects.filter(id=pk)
+        response_json = []
+        response_status = status.HTTP_200_OK
+        try:
+            serialized_prefences = DashboardUserSerializer(preferences, many=True).data
+            response_json.append(serialized_prefences)
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+
+        return Response(data=response_json, status=response_status)
+
+
+    @staticmethod
+    def update(request, pk=None):
+        return Response(data={":)"})
 
     @staticmethod
     def partial_update(request):

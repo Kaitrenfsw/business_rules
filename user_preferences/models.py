@@ -33,3 +33,22 @@ class SourceUser(models.Model):
 
 class DashboardUser(models.Model):
     user_id = models.IntegerField(null=False)
+
+
+class GraphType(models.Model):
+    type = models.IntegerField(null=False)
+    name = models.CharField(null=False, max_length=20)
+
+
+class UserGraph(models.Model):
+    user_id = models.ForeignKey(DashboardUser, on_delete=models.CASCADE, related_name='graphs_selected')
+    graph_type = models.ForeignKey(GraphType, on_delete=models.CASCADE, related_name='type_graph')
+
+
+class TopicGraph(models.Model):
+    user_graph = models.ForeignKey(UserGraph, on_delete=models.CASCADE, related_name='topics_selected')
+    topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='topic_graph')
+
+
+
+

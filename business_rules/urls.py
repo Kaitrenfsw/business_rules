@@ -25,6 +25,7 @@ router.register(r'topic', topic_views.TopicViewSet)
 router.register(r'source', user_preferences_views.SourceViewSet)
 router.register(r'topicUser', user_preferences_views.TopicUserViewSet)
 router.register(r'ldamodelTopics', topic_views.LdaModelTopicsViewSet)
+router.register(r'userDashboard', user_preferences_views.DashboardUserViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
