@@ -182,6 +182,93 @@ Run Django API from service_TM folder:
     ["Exception raised": e] STATUS CODE 400   
 ]
 ```
+
+##### userDashboard: [http://127.0.0.1:8000/userDashboard/pk/](http://127.0.0.1:8000/userDashboard/)
+
+- methods allowed: PUT
+- pk: user_id
+- graph_type:
+    - 1 = Frequency graph
+    - 2 = relation graph
+    - 3 = hot topics graph
+    
+- request: 
+``` 
+    {"graphs_selected":[     
+                        {"graph_type": 1,
+                        "topics_selected": [
+                                            {"topic_id": 23},
+                                            {"topic_id": 24},
+                                            {"topic_id": 25}...
+                                            ]
+                        },
+                        {"graph_type": 3,
+                        "topics_selected": [
+                                            {"topic_id": 66},
+                                            {"topic_id": 77},
+                                            {"topic_id": 88}
+                                            ]
+                        }...] 
+   }
+```
+
+- Response format: 
+``` 
+    {"User preferences updated!"} STATUS CODE 200
+    {"Exception raised": e} STATUS CODE 500
+```
+
+##### userDashboard: [http://127.0.0.1:8000/userDashboard/pk/](http://127.0.0.1:8000/userDashboard/)
+
+- methods allowed: DELETE
+- pk: user_id
+
+- request: empty
+
+- Response format: 
+``` 
+    {"User preferences deleted!"} STATUS CODE 200
+    {"Exception raised": e} STATUS CODE 500
+```
+
+##### userDashboard: [http://127.0.0.1:8000/userDashboard/pk/](http://127.0.0.1:8000/userDashboard/)
+
+- methods allowed: GET
+- pk: user_id
+- graph_type:
+    - 1 = Frequency graph
+    - 2 = relation graph
+    - 3 = hot topics graph
+
+- Response format:
+``` 
+[
+  [
+    {
+    "user_id": 1,
+    "graphs_selected":[     
+                        {"graph_type": 1,
+                        "topics_selected": [
+                                            {"topic_id": 23},
+                                            {"topic_id": 24},
+                                            {"topic_id": 25}...
+                                            ]
+                        },
+                        {"graph_type": 3,
+                        "topics_selected": [
+                                            {"topic_id": 66},
+                                            {"topic_id": 77},
+                                            {"topic_id": 88}
+                                            ]
+                        }...] 
+   }
+
+  ]
+]
+
+{"Exception raised": e} STATUS CODE 500     
+```
+
 ##### dateConversion: [http://127.0.0.1:8000/dateConversion/dd/mm/yyyy/](http://127.0.0.1:8000/dateConversion/dd/mm/yyyy/)
 
 - methods allowed: GET
@@ -191,5 +278,5 @@ Run Django API from service_TM folder:
 - Response format: 
 ``` 
 [{"week":173}] STATUS CODE 200
-{"Exception raised": e} STATUS CODE 500     
-```
+{"Exception raised": e} STATUS CODE 500   
+``` 

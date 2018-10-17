@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Source, TopicUser, Topic
-from .serializers import SourceSerializer
+from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph
+from .serializers import SourceSerializer, DashboardUserSerializer
 from topics.serializers import TopicKeywordSerializer
 
 
@@ -132,4 +132,83 @@ class TopicUserViewSet(viewsets.ViewSet):
     @staticmethod
     def destroy(request):
         return Response(data={":)"})
+
+
+class DashboardUserViewSet(viewsets.ViewSet):
+    queryset = DashboardUser.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        preferences = DashboardUser.objects.filter(id=pk)
+        response_json = []
+        response_status = status.HTTP_200_OK
+        try:
+            serialized_prefences = DashboardUserSerializer(preferences, many=True).data
+            response_json.append(serialized_prefences)
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+
+        return Response(data=response_json, status=response_status)
+
+
+    @staticmethod
+    def update(request, pk=None):
+        # Response setup
+        response_status = status.HTTP_200_OK
+        response_json = {"User preferences updated!"}
+        try:
+            try:
+                dashboard_user_instance = DashboardUser.objects.get(user_id=pk)
+            except DashboardUser.DoesNotExist:
+                dashboard_user_instance = DashboardUser(user_id=pk)
+                dashboard_user_instance.save()
+
+            if 'graphs_selected' in request.data:
+                # Delete older preferences
+                user_preferences = UserGraph.objects.filter(user_id=pk)
+                user_preferences.delete()
+
+                # Save new preferences
+                new_preferences = request.data
+                for graph_preference in new_preferences['graphs_selected']:
+                    new_user_graph = UserGraph(user_id=dashboard_user_instance,
+                                               graph_type_id=graph_preference['graph_type'])
+                    new_user_graph.save()
+                    for topic_selected in graph_preference['topics_selected']:
+                        topic_instance = Topic.objects.get(id=topic_selected['topic_id'])
+                        new_topic_selected = TopicGraph(user_graph=new_user_graph,
+                                                        topic_id=topic_instance)
+                        new_topic_selected.save()
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request, pk=None):
+        try:
+            user_preferences = UserGraph.objects.filter(user_id=pk)
+            user_preferences.delete()
+            response_status = status.HTTP_200_OK
+            response_json = {"User preferences deleted!"}
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        return Response(data=response_json, status=response_status)
 
