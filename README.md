@@ -239,10 +239,8 @@ Run Django API from service_TM folder:
     - 1 = Frequency graph
     - 2 = relation graph
     - 3 = hot topics graph
-    
-- request: empty
 
-- Response format: 
+- Response format:
 ``` 
 [
   [
@@ -267,5 +265,18 @@ Run Django API from service_TM folder:
 
   ]
 ]
-    {"Exception raised": e} STATUS CODE 404
+
+{"Exception raised": e} STATUS CODE 500     
 ```
+
+##### dateConversion: [http://127.0.0.1:8000/dateConversion/dd/mm/yyyy/](http://127.0.0.1:8000/dateConversion/dd/mm/yyyy/)
+
+- methods allowed: GET
+- dd/mm/yyy : example -> 10/10/2014
+- request: empty
+
+- Response format: 
+``` 
+[{"week":173}] STATUS CODE 200
+{"Exception raised": e} STATUS CODE 500   
+``` 

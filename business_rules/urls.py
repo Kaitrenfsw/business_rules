@@ -18,6 +18,7 @@ from django.contrib import admin
 from rest_framework import routers
 from topics import views as topic_views
 from user_preferences import views as user_preferences_views
+from utils import views as utils_views
 
 
 router = routers.SimpleRouter()
@@ -26,6 +27,7 @@ router.register(r'source', user_preferences_views.SourceViewSet)
 router.register(r'topicUser', user_preferences_views.TopicUserViewSet)
 router.register(r'ldamodelTopics', topic_views.LdaModelTopicsViewSet)
 router.register(r'userDashboard', user_preferences_views.DashboardUserViewSet)
+router.register(r'dateConversion', utils_views.DateConversionViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
