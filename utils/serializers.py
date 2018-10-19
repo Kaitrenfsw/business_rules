@@ -5,4 +5,4 @@ from utils.models import DateConversion
 class DateConversionSerializer(serializers.ModelSerializer):
     class Meta:
         model = DateConversion
-        fields = ('week',)
+        fields = ('week','sunday_date',)
