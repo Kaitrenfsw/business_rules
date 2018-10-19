@@ -269,14 +269,14 @@ Run Django API from service_TM folder:
 {"Exception raised": e} STATUS CODE 500     
 ```
 
-##### dateConversion: [http://127.0.0.1:8000/dateConversion/dd/mm/yyyy/](http://127.0.0.1:8000/dateConversion/dd/mm/yyyy/)
+##### dateConversion: [http://127.0.0.1:8000/dateConversion/yyyy-mm-dd/](http://127.0.0.1:8000/dateConversion/yyyy-mm-dd/)
 
 - methods allowed: GET
-- dd/mm/yyy : example -> 10/10/2014
+- yyyy-mm-dd: example -> 2014-12-28
 - request: empty
 
 - Response format: 
 ``` 
-[{"week":173}] STATUS CODE 200
+[{"date":"2010-01-01","week":1,"sunday_date":"2010-01-03"},...] STATUS CODE 200
 {"Exception raised": e} STATUS CODE 500   
 ``` 

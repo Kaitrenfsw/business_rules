@@ -7,8 +7,8 @@ from datetime import date, datetime, timedelta
 
 class DateConversionViewSet(viewsets.ViewSet):
     queryset = DateConversion.objects.all()
-
-    lookup_value_regex = '([0-9]{2})-([0-9]{2})-([0-9]{4})'
+    #                         Year      Month       day
+    lookup_value_regex = '([0-9]{4})-([0-9]{2})-([0-9]{2})'
 
     @staticmethod
     def list(request):
@@ -23,8 +23,8 @@ class DateConversionViewSet(viewsets.ViewSet):
             if ('start_date' and 'end_date') in request.data:
 
                 # Formatting request
-                start_date = datetime.strptime(request.data['start_date'], '%d-%m-%Y')
-                end_date = datetime.strptime(request.data['end_date'], '%d-%m-%Y')
+                start_date = datetime.strptime(request.data['start_date'], '%Y-%m-%d')
+                end_date = datetime.strptime(request.data['end_date'], '%Y-%m-%d')
                 new_date = start_date
                 sunday_date = new_date
                 week = 1
@@ -59,7 +59,7 @@ class DateConversionViewSet(viewsets.ViewSet):
     @staticmethod
     def retrieve(request, pk=None):
         response_json = []
-        start_date = datetime.strptime(pk, '%d-%m-%Y')
+        start_date = datetime.strptime(pk, '%Y-%m-%d')
         end_date = start_date + timedelta(weeks=24)
         try:
             # Get dates for 6 months
