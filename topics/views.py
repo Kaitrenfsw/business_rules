@@ -163,6 +163,18 @@ class TopicComparisonViewSet(viewsets.ViewSet):
 
     @staticmethod
     def create(request):
+        request_data = request.data
+        lda_id = request_data["lda_model_id"]
+        topic_numbers = Topic.objects.all().values_list('topic_number', flat=True)
+        print(len(topic_numbers))
+        for relation in request_data["relations"]:
+            if (relation["topic_1"] in topic_numbers) and (relation["topic_2"] in topic_numbers):
+                topic_1 = Topic.objects.get(lda_model_id=lda_id, topic_number=relation["topic_1"])
+                topic_2 = Topic.objects.get(lda_model_id=lda_id, topic_number=relation["topic_2"])
+                topic_comparison = TopicComparison(topic1_id=topic_1,
+                                                   topic2_id=topic_2,
+                                                   distance=relation["distance"])
+                topic_comparison.save()
         return Response(data={":)"})
 
     @staticmethod
