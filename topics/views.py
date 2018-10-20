@@ -1,6 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import LdaModel, Topic
+from .models import LdaModel, Topic, TopicComparison
 from .serializers import TopicKeywordSerializer, LdaModelSerializer, TopicSerializer
 
 
@@ -140,6 +140,34 @@ class LdaModelTopicsViewSet(viewsets.ViewSet):
             response_status = status.HTTP_404_NOT_FOUND
 
         return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request):
+        return Response(data={":)"})
+
+
+class TopicComparisonViewSet(viewsets.ViewSet):
+    queryset = TopicComparison.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        return Response(data={":)"})
 
     @staticmethod
     def update(request):
