@@ -29,3 +29,8 @@ class TopicComparison(models.Model):
     class Meta:
         unique_together = ('topic1_id', 'topic2_id')
 
+
+class KeywordMatch(models.Model):
+    name = models.CharField(null=False, max_length=100)
+    topicComparison_id = models.ForeignKey(TopicComparison, on_delete=models.CASCADE, related_name='keywords_match')
+

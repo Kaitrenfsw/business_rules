@@ -20,10 +20,24 @@ class KeywordSerializer(serializers.ModelSerializer):
         fields = ('name', 'weight',)
 
 
+class KeywordMatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Keyword
+        fields = ('name',)
+
+
 class TopicComparisonSerializer(serializers.ModelSerializer):
+    keywords_match = KeywordMatchSerializer(many=True)
     class Meta:
         model = TopicComparison
-        fields = '__all__'
+        fields = ('topic1_id', 'topic2_id', 'distance', 'keywords_match',)
+
+    def create(self, validated_data):
+        keywords_data = validated_data.pop('keywords_match')
+        topic_comparison = TopicComparison.objects.create(**validated_data)
+        for keyword in keywords_data:
+            KeywordMatch.objects.create(topicComparison_id=topic_comparison, **keyword)
+        return topic_comparison
 
 
 class TopicKeywordSerializer(serializers.ModelSerializer):
