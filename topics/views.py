@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import LdaModel, Topic, TopicComparison, KeywordMatch
-from .serializers import TopicKeywordSerializer, LdaModelSerializer, TopicSerializer
+from .serializers import TopicKeywordSerializer, LdaModelSerializer, TopicSerializer, TopicComparisonSerializer
 
 
 class TopicViewSet(viewsets.ViewSet):
@@ -189,7 +189,18 @@ class TopicComparisonViewSet(viewsets.ViewSet):
 
     @staticmethod
     def retrieve(request, pk=None):
-        return Response(data={":)"})
+        response_json = []
+        try:
+            topic = Topic.objects.get(id=pk)
+            topic_comparison = TopicComparison.objects.filter(topic1_id=topic)
+            serialized_comparison = TopicComparisonSerializer(topic_comparison, many=True).data
+            response_json.append(serialized_comparison)
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        return Response(data=response_json, status=response_status)
 
     @staticmethod
     def update(request):
