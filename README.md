@@ -280,3 +280,27 @@ Run Django API from service_TM folder:
 [{"date":"2010-01-01","week":1,"sunday_date":"2010-01-03"},...] STATUS CODE 200
 {"Exception raised": e} STATUS CODE 500   
 ``` 
+
+##### TopicComparison: [http://127.0.0.1:8000/topicComparison/<pk>/](http://127.0.0.1:8000/topicComparison/<pk>/)
+
+- methods allowed: GET
+- pk: Topic id
+- request: empty
+
+- Response format: 
+``` 
+[
+[{
+    "topic1_id":1,
+    "topic2_id":99,
+    "distance":0.6740753962,
+    "keywords_match":[
+                        {"name":"part"},
+                        {"name":"technology"}, ...]
+   },...
+   ]
+]
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500   
+```
