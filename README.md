@@ -196,6 +196,7 @@ Run Django API from service_TM folder:
 ``` 
     {"graphs_selected":[     
                         {"graph_type": 1,
+                        "name": "nombre del gráfico",
                         "topics_selected": [
                                             {"topic_id": 23},
                                             {"topic_id": 24},

@@ -182,7 +182,8 @@ class DashboardUserViewSet(viewsets.ViewSet):
                 new_preferences = request.data
                 for graph_preference in new_preferences['graphs_selected']:
                     new_user_graph = UserGraph(user_id=dashboard_user_instance,
-                                               graph_type_id=graph_preference['graph_type'])
+                                               graph_type_id=graph_preference['graph_type'],
+                                               name=graph_preference['name'])
                     new_user_graph.save()
                     for topic_selected in graph_preference['topics_selected']:
                         topic_instance = Topic.objects.get(id=topic_selected['topic_id'])
