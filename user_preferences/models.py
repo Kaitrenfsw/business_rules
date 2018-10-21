@@ -43,6 +43,7 @@ class GraphType(models.Model):
 class UserGraph(models.Model):
     user_id = models.ForeignKey(DashboardUser, on_delete=models.CASCADE, related_name='graphs_selected')
     graph_type = models.ForeignKey(GraphType, on_delete=models.CASCADE, related_name='type_graph')
+    name = models.CharField(null=False, max_length=30, default='Gráfico')
 
 
 class TopicGraph(models.Model):

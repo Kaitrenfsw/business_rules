@@ -192,8 +192,12 @@ class TopicComparisonViewSet(viewsets.ViewSet):
         response_json = []
         try:
             topic = Topic.objects.get(id=pk)
-            topic_comparison = TopicComparison.objects.filter(topic1_id=topic)
+            topic_comparison = TopicComparison.objects.filter(topic1_id=topic).order_by('-distance')[:12]
             serialized_comparison = TopicComparisonSerializer(topic_comparison, many=True).data
+            for comparison in serialized_comparison:
+                topic2_name = Topic.objects.get(id=comparison['topic2_id']).name
+                comparison["topic1_name"] = topic.name
+                comparison["topic2_name"] = topic2_name
             response_json.append(serialized_comparison)
             response_status = status.HTTP_200_OK
         except Exception as e:

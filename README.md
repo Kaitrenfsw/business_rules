@@ -294,6 +294,8 @@ Run Django API from service_TM folder:
     "topic1_id":1,
     "topic2_id":99,
     "distance":0.6740753962,
+    "topic2_name": "Cybersecurity",
+    "topic2_name": "Blogging",
     "keywords_match":[
                         {"name":"part"},
                         {"name":"technology"}, ...]
