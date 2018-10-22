@@ -238,8 +238,8 @@ Run Django API from service_TM folder:
 - pk: user_id
 - graph_type:
     - 1 = Frequency graph
-    - 2 = relation graph
-    - 3 = hot topics graph
+    - 2 = hot topics graph
+    - 3 = relations graph
 
 - Response format:
 ``` 
@@ -290,19 +290,20 @@ Run Django API from service_TM folder:
 
 - Response format: 
 ``` 
+{
+“topic_name”: STRING,
+“topic_id”: INT,
+“relations”: 
 [
-[{
-    "topic1_id":1,
-    "topic2_id":99,
-    "distance":0.6740753962,
-    "topic2_name": "Cybersecurity",
-    "topic2_name": "Blogging",
-    "keywords_match":[
-                        {"name":"part"},
-                        {"name":"technology"}, ...]
-   },...
-   ]
+    {
+“r_topic_name”: STRING,
+“r_topic_id”: INT,
+“distance”: FLOAT
+} ,
+ … 
 ]
+}
+
 STATUS CODE 200
 
 {"Exception raised": e} STATUS CODE 500   
