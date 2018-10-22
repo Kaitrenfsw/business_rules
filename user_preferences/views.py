@@ -147,10 +147,15 @@ class DashboardUserViewSet(viewsets.ViewSet):
 
     @staticmethod
     def retrieve(request, pk=None):
-        preferences = DashboardUser.objects.filter(id=pk)
         response_json = []
         try:
-            serialized_preferences = DashboardUserSerializer(preferences, many=True).data
+            try:
+                dashboard_user_instance = DashboardUser.objects.filter(user_id=pk)
+            except DashboardUser.DoesNotExist:
+                dashboard_user_instance = DashboardUser(user_id=pk)
+                dashboard_user_instance.save()
+
+            serialized_preferences = DashboardUserSerializer(dashboard_user_instance, many=True).data
             response_json.append(serialized_preferences)
             response_status = status.HTTP_200_OK
         except Exception as e:
