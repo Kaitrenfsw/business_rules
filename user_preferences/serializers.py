@@ -23,7 +23,7 @@ class UserGraphSerializer(serializers.ModelSerializer):
     topics_selected = TopicGraphSerializer(many=True)
     class Meta:
         model = UserGraph
-        fields = ('graph_type','topics_selected',)
+        fields = ('graph_type', 'name', 'topics_selected',)
 
 
 class DashboardUserSerializer(serializers.ModelSerializer):

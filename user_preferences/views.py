@@ -1,6 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph
+from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType
 from .serializers import SourceSerializer, DashboardUserSerializer
 from topics.serializers import TopicKeywordSerializer
 
@@ -149,15 +149,13 @@ class DashboardUserViewSet(viewsets.ViewSet):
     def retrieve(request, pk=None):
         preferences = DashboardUser.objects.filter(id=pk)
         response_json = []
-        response_status = status.HTTP_200_OK
         try:
-            serialized_prefences = DashboardUserSerializer(preferences, many=True).data
-            response_json.append(serialized_prefences)
+            serialized_preferences = DashboardUserSerializer(preferences, many=True).data
+            response_json.append(serialized_preferences)
             response_status = status.HTTP_200_OK
         except Exception as e:
             response_json = {"Exception raised": e}
             response_status = status.HTTP_404_NOT_FOUND
-
         return Response(data=response_json, status=response_status)
 
 
@@ -181,8 +179,9 @@ class DashboardUserViewSet(viewsets.ViewSet):
                 # Save new preferences
                 new_preferences = request.data
                 for graph_preference in new_preferences['graphs_selected']:
+                    graph_type_instance = GraphType.objects.get(type=graph_preference['graph_type'])
                     new_user_graph = UserGraph(user_id=dashboard_user_instance,
-                                               graph_type_id=graph_preference['graph_type'],
+                                               graph_type=graph_type_instance,
                                                name=graph_preference['name'])
                     new_user_graph.save()
                     for topic_selected in graph_preference['topics_selected']:
