@@ -15,6 +15,7 @@ class TopicUserSerializer(serializers.ModelSerializer):
 
 
 class TopicGraphSerializer(serializers.ModelSerializer):
+    topic_id = serializers.IntegerField(source= 'topic_user_id.topic_id.id',read_only=True)
     class Meta:
         model = TopicGraph
         fields = ('topic_id',)

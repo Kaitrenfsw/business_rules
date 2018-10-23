@@ -48,7 +48,7 @@ class UserGraph(models.Model):
 
 class TopicGraph(models.Model):
     user_graph = models.ForeignKey(UserGraph, on_delete=models.CASCADE, related_name='topics_selected')
-    topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='topic_graph')
+    topic_user_id = models.ForeignKey(TopicUser, on_delete=models.CASCADE, related_name='topic_graph')
 
 
 

@@ -113,6 +113,8 @@ class TopicUserViewSet(viewsets.ViewSet):
                 for old_topic_id in older_topics:
                     if old_topic_id not in updated_topics:
                         topic_user_instance = TopicUser.objects.get(user_id=data['user_id'], topic_id=old_topic_id)
+                        topic_graph_instance = TopicGraph.objects.filter(topic_user_id=topic_user_instance)
+                        topic_graph_instance.delete()
                         topic_user_instance.delete()
                 response_message = {"Topics updated successfully!"}
                 response_status = status.HTTP_200_OK
@@ -156,6 +158,7 @@ class DashboardUserViewSet(viewsets.ViewSet):
                 dashboard_user_instance.save()
 
             serialized_preferences = DashboardUserSerializer(dashboard_user_instance, many=True).data
+            print(serialized_preferences)
             response_json.append(serialized_preferences)
             response_status = status.HTTP_200_OK
         except Exception as e:
@@ -191,8 +194,9 @@ class DashboardUserViewSet(viewsets.ViewSet):
                     new_user_graph.save()
                     for topic_selected in graph_preference['topics_selected']:
                         topic_instance = Topic.objects.get(id=topic_selected['topic_id'])
+                        topic_user_instance = TopicUser.objects.get(user_id=pk, topic_id=topic_instance)
                         new_topic_selected = TopicGraph(user_graph=new_user_graph,
-                                                        topic_id=topic_instance)
+                                                        topic_user_id=topic_user_instance)
                         new_topic_selected.save()
         except Exception as e:
             response_json = {"Exception raised": e}
