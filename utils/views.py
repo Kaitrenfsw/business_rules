@@ -65,12 +65,18 @@ class DateConversionViewSet(viewsets.ViewSet):
             # Get dates for 6 months
             date_object = DateConversion.objects.filter(date__range=(start_date.date(), end_date.date()))
             serialized_dates = DateConversionSerializer(date_object, many=True).data
-            response_json = serialized_dates
+            week = 0
+            response_data = []
+            for date in serialized_dates:
+                if week != date["week"]:
+                    response_data.append(date)
+                week = date["week"]
+            #response_json = serialized_dates
             response_status = status.HTTP_200_OK
         except Exception as e:
             response_json = {"Exception raised": e}
             response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
-        return Response(data=response_json, status=response_status)
+        return Response(data=response_data, status=response_status)
 
     @staticmethod
     def update(request, pk=None):
