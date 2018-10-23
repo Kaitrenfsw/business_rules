@@ -15,6 +15,7 @@ class TopicUserSerializer(serializers.ModelSerializer):
 
 
 class TopicGraphSerializer(serializers.ModelSerializer):
+    topic_id = serializers.IntegerField(source= 'topic_user_id.topic_id.id',read_only=True)
     class Meta:
         model = TopicGraph
         fields = ('topic_id',)
@@ -23,7 +24,7 @@ class UserGraphSerializer(serializers.ModelSerializer):
     topics_selected = TopicGraphSerializer(many=True)
     class Meta:
         model = UserGraph
-        fields = ('graph_type','topics_selected',)
+        fields = ('graph_type', 'name', 'topics_selected',)
 
 
 class DashboardUserSerializer(serializers.ModelSerializer):

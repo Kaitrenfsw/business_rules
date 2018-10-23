@@ -192,15 +192,27 @@ class TopicComparisonViewSet(viewsets.ViewSet):
         response_json = []
         try:
             topic = Topic.objects.get(id=pk)
-            topic_comparison = TopicComparison.objects.filter(topic1_id=topic)
+            response_dict = dict()
+            response_dict["topic_name"] = topic.name
+            response_dict["topic_id"] = topic.pk
+            response_dict["relations"] = []
+            topic_comparison = TopicComparison.objects.filter(topic1_id=topic).order_by('-distance')[:12]
             serialized_comparison = TopicComparisonSerializer(topic_comparison, many=True).data
-            response_json.append(serialized_comparison)
+            r_topic = dict()
+            for comparison in serialized_comparison:
+                topic2 = Topic.objects.get(id=comparison['topic2_id'])
+                r_topic["r_topic_name"] = topic2.name
+                r_topic["r_topic_id"] = topic2.pk
+                r_topic["distance"] = comparison["distance"]
+                response_dict["relations"].append(r_topic)
+                r_topic = dict()
+            #response_json.append(response_dict)
             response_status = status.HTTP_200_OK
         except Exception as e:
             response_json = {"Exception raised": e}
             response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 
-        return Response(data=response_json, status=response_status)
+        return Response(data=response_dict, status=response_status)
 
     @staticmethod
     def update(request):
