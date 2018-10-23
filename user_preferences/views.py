@@ -159,12 +159,12 @@ class DashboardUserViewSet(viewsets.ViewSet):
 
             serialized_preferences = DashboardUserSerializer(dashboard_user_instance, many=True).data
             print(serialized_preferences)
-            response_json.append(serialized_preferences)
+            #response_json.append(serialized_preferences)
             response_status = status.HTTP_200_OK
         except Exception as e:
             response_json = {"Exception raised": e}
             response_status = status.HTTP_404_NOT_FOUND
-        return Response(data=response_json, status=response_status)
+        return Response(data=serialized_preferences, status=response_status)
 
 
     @staticmethod
