@@ -198,16 +198,16 @@ Run Django API from service_TM folder:
                         {"graph_type": 1,
                         "name": "nombre del gráfico",
                         "topics_selected": [
-                                            {"topic_id": 23},
-                                            {"topic_id": 24},
-                                            {"topic_id": 25}...
+                                            {"topic_id": 23, "name": "topic 1"},
+                                            {"topic_id": 24, "name": "topic 1"},
+                                            {"topic_id": 25, "name": "topic 1"}...
                                             ]
                         },
                         {"graph_type": 3,
                         "topics_selected": [
-                                            {"topic_id": 66},
-                                            {"topic_id": 77},
-                                            {"topic_id": 88}
+                                            {"topic_id": 66, "name": "topic 1"},
+                                            {"topic_id": 77, "name": "topic 1"},
+                                            {"topic_id": 88, "name": "topic 1"}
                                             ]
                         }...] 
    }
@@ -250,16 +250,16 @@ Run Django API from service_TM folder:
     "graphs_selected":[     
                         {"graph_type": 1,
                         "topics_selected": [
-                                            {"topic_id": 23},
-                                            {"topic_id": 24},
-                                            {"topic_id": 25}...
+                                            {"topic_id": 23, "name": "topic 1"},
+                                            {"topic_id": 24, "name": "topic 1"},
+                                            {"topic_id": 25, "name": "topic 1"}...
                                             ]
                         },
                         {"graph_type": 3,
                         "topics_selected": [
-                                            {"topic_id": 66},
-                                            {"topic_id": 77},
-                                            {"topic_id": 88}
+                                            {"topic_id": 66, "name": "topic 1"},
+                                            {"topic_id": 77, "name": "topic 1"},
+                                            {"topic_id": 88, "name": "topic 1"}
                                             ]
                         }...] 
    }

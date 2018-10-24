@@ -15,10 +15,11 @@ class TopicUserSerializer(serializers.ModelSerializer):
 
 
 class TopicGraphSerializer(serializers.ModelSerializer):
-    topic_id = serializers.IntegerField(source= 'topic_user_id.topic_id.id',read_only=True)
+    topic_id = serializers.IntegerField(source='topic_user_id.topic_id.id',read_only=True)
+    name = serializers.CharField(source='topic_user_id.topic_id.name',read_only=True)
     class Meta:
         model = TopicGraph
-        fields = ('topic_id',)
+        fields = ('topic_id', 'name',)
 
 class UserGraphSerializer(serializers.ModelSerializer):
     topics_selected = TopicGraphSerializer(many=True)
