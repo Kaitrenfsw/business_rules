@@ -150,6 +150,7 @@ class DashboardUserViewSet(viewsets.ViewSet):
     @staticmethod
     def retrieve(request, pk=None):
         response_json = []
+        serialized_preferences = dict()
         try:
             try:
                 dashboard_user_instance = DashboardUser.objects.filter(user_id=pk)
