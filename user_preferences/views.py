@@ -331,7 +331,12 @@ class SourceUserViewSet(viewsets.ViewSet):
             source_serialized = SourceSerializer(source_list, many=True).data
             serialized_content = dict()
             serialized_content['user_id'] = pk
-            serialized_content['sources'] = source_serialized
+            serialized_content['sources'] = []
+            for source in source_serialized:
+                temp_dict = source
+                user_source = SourceUser.objects.get(user_id=pk, source_id=source["id"])
+                temp_dict["sourceUser_id"] = user_source.pk
+                serialized_content["sources"].append(temp_dict)
             response_json = serialized_content
             response_status = status.HTTP_200_OK
         except Exception as e:
