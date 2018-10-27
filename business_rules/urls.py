@@ -30,6 +30,7 @@ router.register(r'userDashboard', user_preferences_views.DashboardUserViewSet)
 router.register(r'dateConversion', utils_views.DateConversionViewSet)
 router.register(r'topicComparison', topic_views.TopicComparisonViewSet)
 router.register(r'contentUser', user_preferences_views.ContentUserViewSet)
+router.register(r'sourceUser', user_preferences_views.SourceUserViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
