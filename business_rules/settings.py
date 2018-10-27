@@ -40,10 +40,12 @@ INSTALLED_APPS = [
 
     # external libraries
     'rest_framework',
+    'corsheaders',
 
     # internal_apps
     'topics',
     'user_preferences',
+    'utils',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +56,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # external middleware
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'business_rules.urls'
@@ -73,6 +78,11 @@ TEMPLATES = [
         },
     },
 ]
+
+# CORS Whitelist
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000/'
+)
 
 WSGI_APPLICATION = 'business_rules.wsgi.application'
 
