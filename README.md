@@ -308,3 +308,75 @@ STATUS CODE 200
 
 {"Exception raised": e} STATUS CODE 500   
 ```
+
+##### ContentUser: [http://127.0.0.1:8000/contentUser/<pk>/](http://127.0.0.1:8000/contentUser/<pk>/)
+
+- methods allowed: GET
+- pk: user id
+- request: empty
+
+- Response format: 
+    - id: internal id of saved content pair (user_id, content_id) in business-rules
+    - content_id: id of new in categorized
+``` 
+{
+  "user_id": "1",
+  "contents_id": [
+    {
+      "id": 1,
+      "content_id": "21"
+    },
+    {
+      "id": 2,
+      "content_id": "111"
+    },
+    {
+      "id": 3,
+      "content_id": "fmslknd"
+    },
+    {
+      "id": 4,
+      "content_id": "lmsÃ±cÃ±dslm"
+    }
+  ]
+}
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500   
+```
+
+
+##### ContentUser: [http://127.0.0.1:8000/contentUser/<pk>/](http://127.0.0.1:8000/contentUser/<pk>/)
+
+- methods allowed: DELETE
+- pk: id (internal id of saved content pair (user_id, content_id) in business-rules), received in GET endpoint
+- request: empty
+
+- Response format: 
+``` 
+["Content User preference deleted!"]
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500   
+```
+
+##### ContentUser: [http://127.0.0.1:8000/contentUser/](http://127.0.0.1:8000/contentUser/)
+
+- methods allowed: POST
+- request:
+    - user_id : INT
+    - content_id: STRING
+``` 
+{"user_id":21, "content_id":"Id"}
+``` 
+
+- Response format: 
+``` 
+["Content User created!"]
+
+STATUS CODE 201
+
+{"Exception raised": e} STATUS CODE 500   
+```
