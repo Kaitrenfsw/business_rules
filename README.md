@@ -182,3 +182,129 @@ Run Django API from service_TM folder:
     ["Exception raised": e] STATUS CODE 400   
 ]
 ```
+
+##### userDashboard: [http://127.0.0.1:8000/userDashboard/pk/](http://127.0.0.1:8000/userDashboard/)
+
+- methods allowed: PUT
+- pk: user_id
+- graph_type:
+    - 1 = Frequency graph
+    - 2 = relation graph
+    - 3 = hot topics graph
+    
+- request: 
+``` 
+    {"graphs_selected":[     
+                        {"graph_type": 1,
+                        "name": "nombre del gráfico",
+                        "topics_selected": [
+                                            {"topic_id": 23, "name": "topic 1"},
+                                            {"topic_id": 24, "name": "topic 1"},
+                                            {"topic_id": 25, "name": "topic 1"}...
+                                            ]
+                        },
+                        {"graph_type": 3,
+                        "topics_selected": [
+                                            {"topic_id": 66, "name": "topic 1"},
+                                            {"topic_id": 77, "name": "topic 1"},
+                                            {"topic_id": 88, "name": "topic 1"}
+                                            ]
+                        }...] 
+   }
+```
+
+- Response format: 
+``` 
+    {"User preferences updated!"} STATUS CODE 200
+    {"Exception raised": e} STATUS CODE 500
+```
+
+##### userDashboard: [http://127.0.0.1:8000/userDashboard/pk/](http://127.0.0.1:8000/userDashboard/)
+
+- methods allowed: DELETE
+- pk: user_id
+
+- request: empty
+
+- Response format: 
+``` 
+    {"User preferences deleted!"} STATUS CODE 200
+    {"Exception raised": e} STATUS CODE 500
+```
+
+##### userDashboard: [http://127.0.0.1:8000/userDashboard/pk/](http://127.0.0.1:8000/userDashboard/)
+
+- methods allowed: GET
+- pk: user_id
+- graph_type:
+    - 1 = Frequency graph
+    - 2 = hot topics graph
+    - 3 = relations graph
+
+- Response format:
+``` 
+[
+  [
+    {
+    "user_id": 1,
+    "graphs_selected":[     
+                        {"graph_type": 1,
+                        "topics_selected": [
+                                            {"topic_id": 23, "name": "topic 1"},
+                                            {"topic_id": 24, "name": "topic 1"},
+                                            {"topic_id": 25, "name": "topic 1"}...
+                                            ]
+                        },
+                        {"graph_type": 3,
+                        "topics_selected": [
+                                            {"topic_id": 66, "name": "topic 1"},
+                                            {"topic_id": 77, "name": "topic 1"},
+                                            {"topic_id": 88, "name": "topic 1"}
+                                            ]
+                        }...] 
+   }
+
+  ]
+]
+
+{"Exception raised": e} STATUS CODE 500     
+```
+
+##### dateConversion: [http://127.0.0.1:8000/dateConversion/yyyy-mm-dd/](http://127.0.0.1:8000/dateConversion/yyyy-mm-dd/)
+
+- methods allowed: GET
+- yyyy-mm-dd: example -> 2014-12-28
+- request: empty
+
+- Response format: 
+``` 
+[{"date":"2010-01-01","week":1,"sunday_date":"2010-01-03"},...] STATUS CODE 200
+{"Exception raised": e} STATUS CODE 500   
+``` 
+
+##### TopicComparison: [http://127.0.0.1:8000/topicComparison/<pk>/](http://127.0.0.1:8000/topicComparison/<pk>/)
+
+- methods allowed: GET
+- pk: Topic id
+- request: empty
+
+- Response format: 
+``` 
+{
+“topic_name”: STRING,
+“topic_id”: INT,
+“relations”: 
+[
+    {
+“r_topic_name”: STRING,
+“r_topic_id”: INT,
+“distance”: FLOAT
+} ,
+ … 
+]
+}
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500   
+```
