@@ -1,8 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType, ContentUser
-from .serializers import SourceSerializer, DashboardUserSerializer, ContentUserSerializer
+from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType, ContentUser, SourceUser
+from .serializers import SourceSerializer, DashboardUserSerializer, ContentUserSerializer, SourceUserSerializer
 from topics.serializers import TopicKeywordSerializer
 
 
@@ -57,16 +57,16 @@ class SourceViewSet(viewsets.ViewSet):
 
     @staticmethod
     def destroy(request, pk=None):
-        print(request.data)
-        if ('name' and 'site') in request.data:
-            try:
-                source = Source.objects.get(name=request.data['name'], site=request.data['site'])
-                source.delete()
-                response_message = {"Source "+source.name+" successfully deleted"}
-                response_status = status.HTTP_200_OK
-            except Exception as e:
-                response_message = {"Bad Request, check sent parameters"}
-                response_status = status.HTTP_400_BAD_REQUEST
+        response_message = ""
+        response_status = ""
+        try:
+            source = Source.objects.get(id=pk)
+            source.delete()
+            response_message = {"Source successfully deleted"}
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_message = {"Exception raised: ": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 
         return Response(data=response_message, status=response_status)
 
@@ -268,7 +268,7 @@ class ContentUserViewSet(viewsets.ViewSet):
             content_serialized = ContentUserSerializer(content_user_list, many=True).data
             serialized_content = dict()
             serialized_content['user_id'] = pk
-            serialized_content['contents_id'] = content_serialized
+            serialized_content['contents'] = content_serialized
             response_json = serialized_content
             response_status = status.HTTP_200_OK
         except Exception as e:
@@ -297,3 +297,70 @@ class ContentUserViewSet(viewsets.ViewSet):
 
         return Response(data=response_json, status=response_status)
 
+
+class SourceUserViewSet(viewsets.ViewSet):
+    queryset = SourceUser.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        response_status = ""
+        response_json = {}
+        if ('user_id' and 'source_id') in request.data:
+            try:
+                source_user_data = request.data
+                source_user_instance = SourceUser(user_id=source_user_data['user_id'],
+                                                  source_id_id=source_user_data['source_id'])
+                source_user_instance.save()
+                response_status = status.HTTP_201_CREATED
+                response_json = {"Source User created!"}
+            except Exception as e:
+                response_json = {"Exception raised: ": e}
+                response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        try:
+            source_user_list_ids = SourceUser.objects.filter(user_id=pk).values_list('source_id',
+                                                                                     flat=True)
+            source_list = Source.objects.filter(id__in=source_user_list_ids)
+            source_serialized = SourceSerializer(source_list, many=True).data
+            serialized_content = dict()
+            serialized_content['user_id'] = pk
+            serialized_content['sources'] = []
+            for source in source_serialized:
+                temp_dict = source
+                user_source = SourceUser.objects.get(user_id=pk, source_id=source["id"])
+                temp_dict["sourceUser_id"] = user_source.pk
+                serialized_content["sources"].append(temp_dict)
+            response_json = serialized_content
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def update(request, pk=None):
+        return Response(data={":)"})
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request, pk=None):
+        try:
+            source_user_preference = SourceUser.objects.get(id=pk)
+            source_user_preference.delete()
+            response_status = status.HTTP_200_OK
+            response_json = {"Content User preference deleted!"}
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        return Response(data=response_json, status=response_status)

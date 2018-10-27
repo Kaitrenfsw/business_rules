@@ -196,7 +196,7 @@ class TopicComparisonViewSet(viewsets.ViewSet):
             response_dict["topic_name"] = topic.name
             response_dict["topic_id"] = topic.pk
             response_dict["relations"] = []
-            topic_comparison = TopicComparison.objects.filter(topic1_id=topic).order_by('-distance')[:12]
+            topic_comparison = TopicComparison.objects.filter(topic1_id=topic).order_by('distance')[1:13]
             serialized_comparison = TopicComparisonSerializer(topic_comparison, many=True).data
             r_topic = dict()
             for comparison in serialized_comparison:

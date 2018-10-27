@@ -380,3 +380,71 @@ STATUS CODE 201
 
 {"Exception raised": e} STATUS CODE 500   
 ```
+
+
+##### SourceUser: [http://127.0.0.1:8000/sourceUser/<pk>](http://127.0.0.1:8000/sourceUser/)
+
+- methods allowed: GET
+- pk : user_id
+- request: empty
+
+- Response format: 
+    - id: source id  (used in POST endpoint)
+    - sourceUser_id: id of saved content pair (user_id, source) used in DELETE endpoint
+``` 
+{
+  "user_id": "1",
+  "sources": [
+    {
+      "id": 1,
+      "name": "google",
+      "site": "www.google.cl",
+      "sourceUser_id": 3
+    },
+    {
+      "id": 2,
+      "name": "youtube.com",
+      "site": "www.yotube.com",
+      "sourceUser_id": 2
+    }
+  ]
+}
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500   
+```
+
+##### SourceUser: [http://127.0.0.1:8000/sourceUser/](http://127.0.0.1:8000/sourceUser/)
+
+- methods allowed: POST
+- request:
+    - user_id : INT
+    - source_id: INT
+``` 
+{"user_id":21, "source_id": 22}
+``` 
+
+- Response format: 
+``` 
+["Source User created!"]
+
+STATUS CODE 201
+
+{"Exception raised": e} STATUS CODE 500  
+``` 
+
+##### SourceUser: [http://127.0.0.1:8000/sourceUser/<pk>/](http://127.0.0.1:8000/sourceUser/<pk>/)
+
+- methods allowed: DELETE
+- pk: sourceUser_id (internal id of saved content pair (user_id, content_id) in business-rules), received in GET endpoint
+- request: empty
+
+- Response format: 
+``` 
+["Source User preference deleted!"]
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500   
+```
