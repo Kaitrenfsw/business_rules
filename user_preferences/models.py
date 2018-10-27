@@ -12,7 +12,7 @@ class TopicUser(models.Model):
 
 class ContentUser(models.Model):
     user_id = models.IntegerField(null=False)
-    content_id = models.IntegerField(null=False)
+    content_id = models.CharField(null=False, max_length=100)
 
     class Meta:
         unique_together = ('user_id', 'content_id')
@@ -49,7 +49,4 @@ class UserGraph(models.Model):
 class TopicGraph(models.Model):
     user_graph = models.ForeignKey(UserGraph, on_delete=models.CASCADE, related_name='topics_selected')
     topic_user_id = models.ForeignKey(TopicUser, on_delete=models.CASCADE, related_name='topic_graph')
-
-
-
 

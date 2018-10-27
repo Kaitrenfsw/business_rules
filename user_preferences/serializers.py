@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from user_preferences.models import Source, TopicUser, DashboardUser, UserGraph, TopicGraph
+from user_preferences.models import Source, TopicUser, DashboardUser, UserGraph, TopicGraph, ContentUser
 
 
 class SourceSerializer(serializers.ModelSerializer):
@@ -33,5 +33,11 @@ class DashboardUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = DashboardUser
         fields = ('user_id', 'graphs_selected',)
+
+
+class ContentUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContentUser
+        fields = ('id', 'content_id')
 
 
