@@ -57,16 +57,16 @@ class SourceViewSet(viewsets.ViewSet):
 
     @staticmethod
     def destroy(request, pk=None):
-        print(request.data)
-        if ('name' and 'site') in request.data:
-            try:
-                source = Source.objects.get(name=request.data['name'], site=request.data['site'])
-                source.delete()
-                response_message = {"Source "+source.name+" successfully deleted"}
-                response_status = status.HTTP_200_OK
-            except Exception as e:
-                response_message = {"Bad Request, check sent parameters"}
-                response_status = status.HTTP_400_BAD_REQUEST
+        response_message = ""
+        response_status = ""
+        try:
+            source = Source.objects.get(id=pk)
+            source.delete()
+            response_message = {"Source successfully deleted"}
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_message = {"Exception raised: ": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 
         return Response(data=response_message, status=response_status)
 
