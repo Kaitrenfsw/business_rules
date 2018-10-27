@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType
-from .serializers import SourceSerializer, DashboardUserSerializer
+from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType, ContentUser
+from .serializers import SourceSerializer, DashboardUserSerializer, ContentUserSerializer
 from topics.serializers import TopicKeywordSerializer
 
 
@@ -215,6 +215,67 @@ class DashboardUserViewSet(viewsets.ViewSet):
             user_preferences.delete()
             response_status = status.HTTP_200_OK
             response_json = {"User preferences deleted!"}
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        return Response(data=response_json, status=response_status)
+
+
+class ContentUserViewSet(viewsets.ViewSet):
+    queryset = ContentUser.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        response_status = ""
+        response_json = {}
+        if ('user_id' and 'content_id') in request.data:
+            try:
+                content_user_data = request.data
+                content_user_instance = ContentUser(user_id=content_user_data['user_id'],
+                                                    content_id=content_user_data['content_id'])
+                content_user_instance.save()
+                response_status = status.HTTP_201_CREATED
+                response_json = {"Content User created!"}
+            except Exception as e:
+                response_json = {"Exception raised: ": e}
+                response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        try:
+            content_user_list = ContentUser.objects.filter(user_id=pk)
+            content_serialized = ContentUserSerializer(content_user_list, many=True).data
+            serialized_content = dict()
+            serialized_content['user_id'] = pk
+            serialized_content['contents_id'] = content_serialized
+            response_json = serialized_content
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def update(request, pk=None):
+        return Response(data={":)"})
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request, pk=None):
+        try:
+            content_user_preference = ContentUser.objects.get(id=pk)
+            content_user_preference.delete()
+            response_status = status.HTTP_200_OK
+            response_json = {"Content User preference deleted!"}
         except Exception as e:
             response_json = {"Exception raised": e}
             response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
