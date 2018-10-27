@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import LdaModel, Topic
-from .serializers import TopicKeywordSerializer, LdaModelSerializer, TopicSerializer
+from .models import LdaModel, Topic, TopicComparison, KeywordMatch
+from .serializers import TopicKeywordSerializer, LdaModelSerializer, TopicSerializer, TopicComparisonSerializer
 
 
 class TopicViewSet(viewsets.ViewSet):
@@ -140,6 +140,79 @@ class LdaModelTopicsViewSet(viewsets.ViewSet):
             response_status = status.HTTP_404_NOT_FOUND
 
         return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request):
+        return Response(data={":)"})
+
+
+class TopicComparisonViewSet(viewsets.ViewSet):
+    queryset = TopicComparison.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        request_data = request.data
+        try:
+            lda_id = request_data["lda_model_id"]
+            topic_numbers = Topic.objects.all().values_list('topic_number', flat=True)
+
+            for relation in request_data["relations"]:
+                if (relation["topic_1"] in topic_numbers) and (relation["topic_2"] in topic_numbers):
+                    topic_1 = Topic.objects.get(lda_model_id=lda_id, topic_number=relation["topic_1"])
+                    topic_2 = Topic.objects.get(lda_model_id=lda_id, topic_number=relation["topic_2"])
+                    topic_comparison = TopicComparison(topic1_id=topic_1,
+                                                       topic2_id=topic_2,
+                                                       distance=relation["distance"])
+                    topic_comparison.save()
+                    for keyword in relation["keywords_match"]:
+                        keyword_match = KeywordMatch(name=keyword, topicComparison_id=topic_comparison)
+                        keyword_match.save()
+
+            response_json = {"Topics comparison saved!"}
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        response_json = []
+        try:
+            topic = Topic.objects.get(id=pk)
+            response_dict = dict()
+            response_dict["topic_name"] = topic.name
+            response_dict["topic_id"] = topic.pk
+            response_dict["relations"] = []
+            topic_comparison = TopicComparison.objects.filter(topic1_id=topic).order_by('-distance')[:12]
+            serialized_comparison = TopicComparisonSerializer(topic_comparison, many=True).data
+            r_topic = dict()
+            for comparison in serialized_comparison:
+                topic2 = Topic.objects.get(id=comparison['topic2_id'])
+                r_topic["r_topic_name"] = topic2.name
+                r_topic["r_topic_id"] = topic2.pk
+                r_topic["distance"] = comparison["distance"]
+                response_dict["relations"].append(r_topic)
+                r_topic = dict()
+            #response_json.append(response_dict)
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        return Response(data=response_dict, status=response_status)
 
     @staticmethod
     def update(request):
