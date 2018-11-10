@@ -448,3 +448,83 @@ STATUS CODE 200
 
 {"Exception raised": e} STATUS CODE 500   
 ```
+
+##### UserVote: [http://127.0.0.1:8000/userVote/<pk>/](http://127.0.0.1:8000/userVote/<pk>/)
+
+- methods allowed: GET
+- pk: user_id
+- request: empty
+
+- Response format: 
+``` 
+[{  "new_id":"ldmlsdlmksandlks",
+    "vote":1
+    },
+ {  "new_id":"dkdsmdsa",
+    "vote":1},...]
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500
+``` 
+
+##### UserVote: [http://127.0.0.1:8000/userVote/<pk>/](http://127.0.0.1:8000/userVote/<pk>/)
+
+- methods allowed: PUT
+- pk: user_id
+- request:
+    - new_id: uid of new saved in categorized
+    - source_id: 
+``` 
+{"new_id": "ld",
+"source_id": 33,
+"vote": 1}
+``` 
+
+- Response format: 
+``` 
+["User preferences updated!"]
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500
+``` 
+
+##### SourceVotes: [http://127.0.0.1:8000/sourceVotes/<pk>/](http://127.0.0.1:8000/sourceVotes/<pk>/)
+
+- methods allowed: GET
+- pk: source_id
+- request: empty
+
+- Response format: 
+``` 
+{   "id":17,
+    "name":"Hacker News ",
+    "site":"https://news.ycombinator.com/ ",
+    "up_votes":2,
+    "down_votes":1
+    }
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 404
+``` 
+
+##### SourceVotes: [http://127.0.0.1:8000/sourceVotes/](http://127.0.0.1:8000/sourceVotes)
+
+- methods allowed: GET
+- request: empty
+
+- Response format: 
+``` 
+[{   "id":17,
+    "name":"Hacker News ",
+    "site":"https://news.ycombinator.com/ ",
+    "up_votes":2,
+    "down_votes":1
+    }, ...]
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 404
+``` 

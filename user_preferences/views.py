@@ -470,7 +470,6 @@ class SourceVotesViewSet(viewsets.ViewSet):
     def update(request, pk=None):
         return Response(data={":)"})
 
-
     @staticmethod
     def partial_update(request):
         return Response(data={":)"})
