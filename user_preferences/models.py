@@ -50,3 +50,13 @@ class TopicGraph(models.Model):
     user_graph = models.ForeignKey(UserGraph, on_delete=models.CASCADE, related_name='topics_selected')
     topic_user_id = models.ForeignKey(TopicUser, on_delete=models.CASCADE, related_name='topic_graph')
 
+
+class UserVote(models.Model):
+    user_id = models.IntegerField(null=False)
+    new_id = models.CharField(null=False, max_length=100)
+    vote = models.IntegerField(null=False)
+    source_id = models.ForeignKey(Source, on_delete=models.CASCADE, related_name='source')
+
+    class Meta:
+        unique_together = ('user_id', 'new_id')
+
