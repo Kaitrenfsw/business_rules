@@ -31,6 +31,8 @@ router.register(r'dateConversion', utils_views.DateConversionViewSet)
 router.register(r'topicComparison', topic_views.TopicComparisonViewSet)
 router.register(r'contentUser', user_preferences_views.ContentUserViewSet)
 router.register(r'sourceUser', user_preferences_views.SourceUserViewSet)
+router.register(r'userVote', user_preferences_views.UserVotesViewSet)
+router.register(r'sourceVotes', user_preferences_views.SourceVotesViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

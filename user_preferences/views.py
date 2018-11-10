@@ -1,8 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType, ContentUser, SourceUser
-from .serializers import SourceSerializer, DashboardUserSerializer, ContentUserSerializer, SourceUserSerializer
+from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType, ContentUser, SourceUser, UserVote
+from .serializers import SourceSerializer, DashboardUserSerializer, ContentUserSerializer, SourceUserSerializer, UserVoteSerializer
 from topics.serializers import TopicKeywordSerializer
 
 
@@ -364,3 +364,116 @@ class SourceUserViewSet(viewsets.ViewSet):
             response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 
         return Response(data=response_json, status=response_status)
+
+
+class UserVotesViewSet(viewsets.ViewSet):
+    queryset = UserVote.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        try:
+            user_votes = UserVote.objects.filter(user_id=pk)
+            serialized_content = UserVoteSerializer(user_votes, many=True).data
+            response_json = serialized_content
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def update(request, pk=None):
+        # Response setup
+        response_status = status.HTTP_200_OK
+        response_json = {"User preferences updated!"}
+        try:
+            if ("new_id" and "vote" and "source_id") in request.data:
+                data = request.data
+                user_vote_instance = UserVote.objects.get(user_id=pk, new_id=data['new_id'])
+                user_vote_instance.vote = data['vote']
+                user_vote_instance.save()
+        except UserVote.DoesNotExist:
+            data = request.data
+            source_instance = Source.objects.get(id=data['source_id'])
+            user_vote_instance = UserVote(user_id=pk,
+                                          new_id=data['new_id'],
+                                          vote=data['vote'],
+                                          source_id_id=source_instance)
+            user_vote_instance.save()
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request, pk=None):
+        return Response(data={":)"})
+
+
+class SourceVotesViewSet(viewsets.ViewSet):
+    queryset = Source.objects.all()
+
+    @staticmethod
+    def list(request):
+        try:
+            source_instances = Source.objects.all()
+            response_list = []
+            for source in source_instances:
+                up_votes = len(UserVote.objects.filter(source_id=source, vote=1))
+                down_votes = len(UserVote.objects.filter(source_id=source, vote=0))
+                serialized_source = SourceSerializer(source).data
+                serialized_content = serialized_source
+                serialized_content['up_votes'] = up_votes
+                serialized_content['down_votes'] = down_votes
+                response_list.append(serialized_content)
+                serialized_content = {}
+            response_json = response_list
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        try:
+            source_instance = Source.objects.get(id=pk)
+            up_votes = len(UserVote.objects.filter(source_id=source_instance, vote=1))
+            down_votes = len(UserVote.objects.filter(source_id=source_instance, vote=0))
+            serialized_source = SourceSerializer(source_instance).data
+            serialized_content = serialized_source
+            serialized_content['up_votes'] = up_votes
+            serialized_content['down_votes'] = down_votes
+            response_json = serialized_content
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def update(request, pk=None):
+        return Response(data={":)"})
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request, pk=None):
+        return Response(data={":)"})

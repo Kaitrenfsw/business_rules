@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from user_preferences.models import Source, TopicUser, DashboardUser, UserGraph, TopicGraph, ContentUser, SourceUser
+from user_preferences.models import Source, TopicUser, DashboardUser, UserGraph, TopicGraph, ContentUser, SourceUser, UserVote
 
 
 class SourceSerializer(serializers.ModelSerializer):
@@ -47,4 +47,9 @@ class SourceUserSerializer(serializers.ModelSerializer):
         model = SourceUser
         fields = ('id', 'user_id', 'user_source',)
 
+
+class UserVoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserVote
+        fields = ('new_id', 'vote',)
 
