@@ -282,7 +282,7 @@ Run Django API from service_TM folder:
 {"Exception raised": e} STATUS CODE 500   
 ``` 
 
-##### TopicComparison: [http://127.0.0.1:8000/topicComparison/<pk>/](http://127.0.0.1:8000/topicComparison/<pk>/)
+##### TopicComparison: [http://127.0.0.1:8000/topicComparison/pk/](http://127.0.0.1:8000/topicComparison/<pk>/)
 
 - methods allowed: GET
 - pk: Topic id
@@ -309,7 +309,7 @@ STATUS CODE 200
 {"Exception raised": e} STATUS CODE 500   
 ```
 
-##### ContentUser: [http://127.0.0.1:8000/contentUser/<pk>/](http://127.0.0.1:8000/contentUser/<pk>/)
+##### ContentUser: [http://127.0.0.1:8000/contentUser/pk/](http://127.0.0.1:8000/contentUser/<pk>/)
 
 - methods allowed: GET
 - pk: user id
@@ -347,7 +347,7 @@ STATUS CODE 200
 ```
 
 
-##### ContentUser: [http://127.0.0.1:8000/contentUser/<pk>/](http://127.0.0.1:8000/contentUser/<pk>/)
+##### ContentUser: [http://127.0.0.1:8000/contentUser/pk/](http://127.0.0.1:8000/contentUser/<pk>/)
 
 - methods allowed: DELETE
 - pk: id (internal id of saved content pair (user_id, content_id) in business-rules), received in GET endpoint
@@ -382,7 +382,7 @@ STATUS CODE 201
 ```
 
 
-##### SourceUser: [http://127.0.0.1:8000/sourceUser/<pk>](http://127.0.0.1:8000/sourceUser/)
+##### SourceUser: [http://127.0.0.1:8000/sourceUser/pk/](http://127.0.0.1:8000/sourceUser/)
 
 - methods allowed: GET
 - pk : user_id
@@ -434,7 +434,7 @@ STATUS CODE 201
 {"Exception raised": e} STATUS CODE 500  
 ``` 
 
-##### SourceUser: [http://127.0.0.1:8000/sourceUser/<pk>/](http://127.0.0.1:8000/sourceUser/<pk>/)
+##### SourceUser: [http://127.0.0.1:8000/sourceUser/pk/](http://127.0.0.1:8000/sourceUser/<pk>/)
 
 - methods allowed: DELETE
 - pk: sourceUser_id (internal id of saved content pair (user_id, content_id) in business-rules), received in GET endpoint
@@ -449,7 +449,7 @@ STATUS CODE 200
 {"Exception raised": e} STATUS CODE 500   
 ```
 
-##### UserVote: [http://127.0.0.1:8000/userVote/<pk>/](http://127.0.0.1:8000/userVote/<pk>/)
+##### UserVote: [http://127.0.0.1:8000/userVote/pk/](http://127.0.0.1:8000/userVote/<pk>/)
 
 - methods allowed: GET
 - pk: user_id
@@ -468,7 +468,7 @@ STATUS CODE 200
 {"Exception raised": e} STATUS CODE 500
 ``` 
 
-##### UserVote: [http://127.0.0.1:8000/userVote/<pk>/](http://127.0.0.1:8000/userVote/<pk>/)
+##### UserVote: [http://127.0.0.1:8000/userVote/pk/](http://127.0.0.1:8000/userVote/<pk>/)
 
 - methods allowed: PUT
 - pk: user_id
@@ -490,7 +490,7 @@ STATUS CODE 200
 {"Exception raised": e} STATUS CODE 500
 ``` 
 
-##### SourceVotes: [http://127.0.0.1:8000/sourceVotes/<pk>/](http://127.0.0.1:8000/sourceVotes/<pk>/)
+##### SourceVotes: [http://127.0.0.1:8000/sourceVotes/pk/](http://127.0.0.1:8000/sourceVotes/<pk>/)
 
 - methods allowed: GET
 - pk: source_id
@@ -523,6 +523,25 @@ STATUS CODE 200
     "up_votes":2,
     "down_votes":1
     }, ...]
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 404
+``` 
+
+##### NewVotes: [http://127.0.0.1:8000/newVotes/](http://127.0.0.1:8000/newVotes)
+
+- methods allowed: GET
+- request: empty
+
+- Response format: 
+``` 
+[{  "new_id":"dkdsmdsa",
+    "up_votes":1,
+    "down_votes":0},
+    {"new_id":"dsnalkdnsadn",
+    "up_votes":1,
+    "down_votes":0},...]
 
 STATUS CODE 200
 

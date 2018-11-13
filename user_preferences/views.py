@@ -477,3 +477,47 @@ class SourceVotesViewSet(viewsets.ViewSet):
     @staticmethod
     def destroy(request, pk=None):
         return Response(data={":)"})
+
+
+class NewVotesViewSet(viewsets.ViewSet):
+    queryset = UserVote.objects.all()
+
+    @staticmethod
+    def list(request):
+        try:
+            news_ids = UserVote.objects.all().values_list('new_id', flat=True)
+            response_list = []
+            for new_id in news_ids:
+                up_votes = len(UserVote.objects.filter(new_id=new_id, vote=1))
+                down_votes = len(UserVote.objects.filter(new_id=new_id, vote=0))
+                serialized_content = dict()
+                serialized_content['new_id'] = new_id
+                serialized_content['up_votes'] = up_votes
+                serialized_content['down_votes'] = down_votes
+                response_list.append(serialized_content)
+            response_json = response_list
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        return Response(data={":)"})
+
+    @staticmethod
+    def update(request, pk=None):
+        return Response(data={":)"})
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request, pk=None):
+        return Response(data={":)"})
