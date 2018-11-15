@@ -1,8 +1,7 @@
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType, ContentUser, SourceUser, UserVote
-from .serializers import SourceSerializer, DashboardUserSerializer, ContentUserSerializer, SourceUserSerializer, UserVoteSerializer
+from .serializers import TopicUserSerializer, SourceSerializer, DashboardUserSerializer, ContentUserSerializer, SourceUserSerializer, UserVoteSerializer
 from topics.serializers import TopicKeywordSerializer
 
 
@@ -106,18 +105,26 @@ class TopicUserViewSet(viewsets.ViewSet):
                 updated_topics = data["user_topics_id"]
 
                 # adding new subscriptions
+                new_subscribed_topics = []
                 for new_topic_id in updated_topics:
                     if new_topic_id not in older_topics:
                         new_topic_user_instance = TopicUser(user_id=data['user_id'], topic_id_id=new_topic_id)
+                        new_subscribed_topics.append(new_topic_user_instance)
                         new_topic_user_instance.save()
+
                 # unsubscribing
+                unsusbcribed_topics = []
                 for old_topic_id in older_topics:
                     if old_topic_id not in updated_topics:
                         topic_user_instance = TopicUser.objects.get(user_id=data['user_id'], topic_id=old_topic_id)
                         topic_graph_instance = TopicGraph.objects.filter(topic_user_id=topic_user_instance)
+                        unsusbcribed_topics.append(topic_user_instance)
                         topic_graph_instance.delete()
                         topic_user_instance.delete()
-                response_message = {"Topics updated successfully!"}
+                response_message = dict()
+                response_message['user_id'] = data['user_id']
+                response_message['subscribed_topics'] = TopicUserSerializer(new_subscribed_topics, many=True).data
+                response_message['unsubscribed_topics'] = TopicUserSerializer(unsusbcribed_topics, many=True).data
                 response_status = status.HTTP_200_OK
             except Exception as e:
                 response_message = {"Exception raised": e}

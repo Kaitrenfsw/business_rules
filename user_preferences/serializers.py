@@ -11,7 +11,7 @@ class SourceSerializer(serializers.ModelSerializer):
 class TopicUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = TopicUser
-        fields = ('topic_id',)
+        fields = '__all__'
 
 
 class TopicGraphSerializer(serializers.ModelSerializer):
