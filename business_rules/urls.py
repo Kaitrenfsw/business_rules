@@ -34,6 +34,7 @@ router.register(r'sourceUser', user_preferences_views.SourceUserViewSet)
 router.register(r'userVote', user_preferences_views.UserVotesViewSet)
 router.register(r'sourceVotes', user_preferences_views.SourceVotesViewSet)
 router.register(r'newVotes', user_preferences_views.NewVotesViewSet)
+router.register(r'topicStats', user_preferences_views.TopicStatsViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

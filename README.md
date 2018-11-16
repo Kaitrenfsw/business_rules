@@ -547,3 +547,24 @@ STATUS CODE 200
 
 {"Exception raised": e} STATUS CODE 404
 ``` 
+
+##### TopicStats: [http://127.0.0.1:8000/topicStats/pk](http://127.0.0.1:8000/newVotes)
+
+- methods allowed: GET
+- request:
+    - user_ids separated by "-" i.e: 1-22-343-33-22
+
+- Response format: 
+``` 
+[{
+    "subscribed_amount":2,
+    "topic_name":"Intellectual Property"},
+    {"subscribed_amount":2,
+    "topic_name":"Drugs and Technology"}
+    {"subscribed_amount":2,
+    "topic_name":"Pope Francis"}, ...]
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500
+```
