@@ -177,7 +177,7 @@ Run Django API from service_TM folder:
 ```
 - user_topics_id : topics subscribed after save last selection in UI
 - Response format: 
-``` ["Topics updated successfully!"] STATUS CODE 200
+``` [{"user_id":1,"subscribed_topics":[1,2,3,5],"unsubscribed_topics":[2,3,4,5,6]}] STATUS CODE 200
     ["Bad Request, check sent parameters"] STATUS CODE 500
     ["Exception raised": e] STATUS CODE 400   
 ]
