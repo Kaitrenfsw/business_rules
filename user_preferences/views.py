@@ -413,7 +413,7 @@ class UserVotesViewSet(viewsets.ViewSet):
             user_vote_instance = UserVote(user_id=pk,
                                           new_id=data['new_id'],
                                           vote=data['vote'],
-                                          source_id_id=source_instance)
+                                          source_id=source_instance)
             user_vote_instance.save()
             response_json = {"Exception raised": e}
             response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
