@@ -52,4 +52,3 @@ class UserVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserVote
         fields = ('new_id', 'vote',)
-

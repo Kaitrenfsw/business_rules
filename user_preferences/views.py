@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Source, TopicUser, Topic, DashboardUser, UserGraph, TopicGraph, GraphType, ContentUser, SourceUser, UserVote
 from .serializers import TopicUserSerializer, SourceSerializer, DashboardUserSerializer, ContentUserSerializer, SourceUserSerializer, UserVoteSerializer
-from topics.serializers import TopicKeywordSerializer
+from topics.serializers import TopicKeywordSerializer, TopicSerializer
 
 
 class SourceViewSet(viewsets.ViewSet):
@@ -516,6 +516,51 @@ class NewVotesViewSet(viewsets.ViewSet):
     @staticmethod
     def retrieve(request, pk=None):
         return Response(data={":)"})
+
+    @staticmethod
+    def update(request, pk=None):
+        return Response(data={":)"})
+
+    @staticmethod
+    def partial_update(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request, pk=None):
+        return Response(data={":)"})
+
+
+class TopicStatsViewSet(viewsets.ViewSet):
+    queryset = UserVote.objects.all()
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        user_ids = list(map(int, pk.split("-")))
+        try:
+            topics = Topic.objects.all()
+            response_status = status.HTTP_200_OK
+            stats = []
+            for topic in topics:
+                topic_stats = dict()
+                subscribed_amount = len(TopicUser.objects.filter(topic_id=topic, user_id__in=user_ids))
+                topic_stats['subscribed_amount'] = subscribed_amount
+                topic_stats['topic_name'] = topic.name
+                stats.append(topic_stats)
+            sorted_stats = sorted(stats, key=lambda k: k['subscribed_amount'], reverse=True)
+            response_json = sorted_stats[0:10]
+
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_json, status=response_status)
 
     @staticmethod
     def update(request, pk=None):
