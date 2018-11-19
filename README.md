@@ -328,7 +328,7 @@ STATUS CODE 200
 ``` 
 {
   "user_id": "1",
-  "contents_id": [
+  "contents": [
     {
       "id": 1,
       "content_id": "21"
