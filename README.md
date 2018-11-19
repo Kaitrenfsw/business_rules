@@ -554,6 +554,22 @@ STATUS CODE 200
 
 {"Exception raised": e} STATUS CODE 404
 ``` 
+##### NewVotes: [http://127.0.0.1:8000/newVotes/pk/](http://127.0.0.1:8000/newVotes/pk/)
+
+- methods allowed: GET
+- request: empty
+
+- Response format: 
+``` 
+{  "new_id":"dkdsmdsa",
+    "up_votes":1,
+    "down_votes":0
+    }
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 404
+``` 
 
 ##### TopicStats: [http://127.0.0.1:8000/topicStats/pk](http://127.0.0.1:8000/newVotes)
 
