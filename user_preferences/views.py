@@ -515,7 +515,20 @@ class NewVotesViewSet(viewsets.ViewSet):
 
     @staticmethod
     def retrieve(request, pk=None):
-        return Response(data={":)"})
+        try:
+            up_votes = len(UserVote.objects.filter(new_id=str(pk), vote=1))
+            down_votes = len(UserVote.objects.filter(new_id=str(pk), vote=0))
+            serialized_content = dict()
+            serialized_content['new_id'] = str(pk)
+            serialized_content['up_votes'] = up_votes
+            serialized_content['down_votes'] = down_votes
+            response_json = serialized_content
+            response_status = status.HTTP_200_OK
+
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_404_NOT_FOUND
+        return Response(data=response_json, status=response_status)
 
     @staticmethod
     def update(request, pk=None):
