@@ -354,15 +354,15 @@ STATUS CODE 200
 ```
 
 
-##### ContentUser: [http://127.0.0.1:8000/contentUser/pk/](http://127.0.0.1:8000/contentUser/<pk>/)
+##### ContentUser: [http://127.0.0.1:8000/contentUser/pk/](http://127.0.0.1:8000/contentUser/pk/)
 
-- methods allowed: DELETE
-- pk: id (internal id of saved content pair (user_id, content_id) in business-rules), received in GET endpoint
+- methods allowed: PUT
+- pk: user_id
 - request: empty
 
 - Response format: 
 ``` 
-["Content User preference deleted!"]
+{"user_id":21, "content_id":"Id"}
 
 STATUS CODE 200
 

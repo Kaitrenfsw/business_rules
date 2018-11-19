@@ -285,7 +285,18 @@ class ContentUserViewSet(viewsets.ViewSet):
 
     @staticmethod
     def update(request, pk=None):
-        return Response(data={":)"})
+        try:
+            data = request.data
+            print(data)
+            content_user_preference = ContentUser.objects.get(user_id=int(data["user_id"]), content_id=data["content_id"])
+            content_user_preference.delete()
+            response_status = status.HTTP_200_OK
+            response_json = {"Content User preference deleted!"}
+
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_json, status=response_status)
 
     @staticmethod
     def partial_update(request):
@@ -293,16 +304,7 @@ class ContentUserViewSet(viewsets.ViewSet):
 
     @staticmethod
     def destroy(request, pk=None):
-        try:
-            content_user_preference = ContentUser.objects.get(id=pk)
-            content_user_preference.delete()
-            response_status = status.HTTP_200_OK
-            response_json = {"Content User preference deleted!"}
-        except Exception as e:
-            response_json = {"Exception raised": e}
-            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
-
-        return Response(data=response_json, status=response_status)
+        return Response(data={":)"})
 
 
 class SourceUserViewSet(viewsets.ViewSet):
