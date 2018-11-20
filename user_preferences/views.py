@@ -566,12 +566,14 @@ class TopicStatsViewSet(viewsets.ViewSet):
             for topic in topics:
                 topic_stats = dict()
                 subscribed_amount = len(TopicUser.objects.filter(topic_id=topic, user_id__in=user_ids))
-                topic_stats['subscribed_amount'] = subscribed_amount
+                topic_stats['user_amount'] = subscribed_amount
                 topic_stats['topic_name'] = topic.name
+                topic_stats['topic_id'] = topic.id
                 stats.append(topic_stats)
-            sorted_stats = sorted(stats, key=lambda k: k['subscribed_amount'], reverse=True)
-            response_json = sorted_stats[0:10]
-
+            sorted_stats = sorted(stats, key=lambda k: k['user_amount'], reverse=True)
+            topics_stats = dict()
+            topics_stats['topics'] = sorted_stats[0:10]
+            response_json = topics_stats
         except Exception as e:
             response_json = {"Exception raised": e}
             response_status = status.HTTP_500_INTERNAL_SERVER_ERROR

@@ -579,13 +579,10 @@ STATUS CODE 200
 
 - Response format: 
 ``` 
-[{
-    "subscribed_amount":2,
-    "topic_name":"Intellectual Property"},
-    {"subscribed_amount":2,
-    "topic_name":"Drugs and Technology"}
-    {"subscribed_amount":2,
-    "topic_name":"Pope Francis"}, ...]
+{"topics":[
+    {"user_amount":2,
+    "topic_name":"Intellectual Property",
+    "topic_id": 1}, ...]}
 
 STATUS CODE 200
 
