@@ -402,7 +402,7 @@ class UserVotesViewSet(viewsets.ViewSet):
         try:
             user_votes = UserVote.objects.filter(user_id=pk)
             serialized_content = UserVoteSerializer(user_votes, many=True).data
-            response_json = serialized_content
+            response_json = {"records": serialized_content}
             response_status = status.HTTP_200_OK
         except Exception as e:
             response_json = {"Exception raised": e}

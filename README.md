@@ -467,7 +467,7 @@ STATUS CODE 200
 
 - Response format: 
 ``` 
-[{  "new_id":"ldmlsdlmksandlks",
+{"records":[{  "new_id":"ldmlsdlmksandlks",
     "vote":1
     },
  {  "new_id":"dkdsmdsa",
