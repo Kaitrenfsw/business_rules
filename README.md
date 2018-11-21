@@ -422,9 +422,12 @@ STATUS CODE 200
 {"Exception raised": e} STATUS CODE 500   
 ```
 
-##### SourceUser: [http://127.0.0.1:8000/sourceUser/](http://127.0.0.1:8000/sourceUser/)
+##### SourceUser: [http://127.0.0.1:8000/sourceUser/pk](http://127.0.0.1:8000/sourceUser/)
 
-- methods allowed: POST
+- methods allowed: PUT
+- pk: 
+    - 0: delete source
+    - 1: save source
 - request:
     - user_id : INT
     - source_id: INT
