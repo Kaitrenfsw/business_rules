@@ -355,7 +355,27 @@ class SourceUserViewSet(viewsets.ViewSet):
 
     @staticmethod
     def update(request, pk=None):
-        return Response(data={":)"})
+        # Response setup
+        response_status = status.HTTP_200_OK
+        response_json = {"User preference deleted"}
+        try:
+            if pk == '0':
+                data = request.data
+                source_instance = Source.objects.get(id=data['source_id'])
+                source_user_instance = SourceUser.objects.get(user_id=data['user_id'], source_id=source_instance)
+                source_user_instance.delete()
+            elif pk == '1':
+                data = request.data
+                source_instance = Source.objects.get(id=data['source_id'])
+                source_user_instance = SourceUser(user_id=data['user_id'],
+                                                  source_id=source_instance)
+                source_user_instance.save()
+                response_json = {"Preference saved"}
+                response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_json, status=response_status)
 
     @staticmethod
     def partial_update(request):
@@ -363,16 +383,7 @@ class SourceUserViewSet(viewsets.ViewSet):
 
     @staticmethod
     def destroy(request, pk=None):
-        try:
-            source_user_preference = SourceUser.objects.get(id=pk)
-            source_user_preference.delete()
-            response_status = status.HTTP_200_OK
-            response_json = {"Content User preference deleted!"}
-        except Exception as e:
-            response_json = {"Exception raised": e}
-            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
-
-        return Response(data=response_json, status=response_status)
+        return Response(data={":)"})
 
 
 class UserVotesViewSet(viewsets.ViewSet):
