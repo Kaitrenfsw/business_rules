@@ -417,17 +417,19 @@ class UserVotesViewSet(viewsets.ViewSet):
         try:
             if ("new_id" and "vote" and "source_id") in request.data:
                 data = request.data
-                user_vote_instance = UserVote.objects.get(user_id=pk, new_id=data['new_id'])
-                user_vote_instance.vote = data['vote']
-                user_vote_instance.save()
-        except UserVote.DoesNotExist:
-            data = request.data
-            source_instance = Source.objects.get(id=data['source_id'])
-            user_vote_instance = UserVote(user_id=pk,
-                                          new_id=data['new_id'],
-                                          vote=data['vote'],
-                                          source_id=source_instance)
-            user_vote_instance.save()
+                if UserVote.objects.filter(user_id=pk, new_id=data['new_id']).exists():
+                    user_vote_instance = UserVote.objects.get(user_id=pk, new_id=data['new_id'])
+                    user_vote_instance.vote = data['vote']
+                    user_vote_instance.save()
+                else:
+                    data = request.data
+                    source_instance = Source.objects.get(id=data['source_id'])
+                    user_vote_instance = UserVote(user_id=pk,
+                                                  new_id=data['new_id'],
+                                                  vote=data['vote'],
+                                                  source_id=source_instance)
+                    user_vote_instance.save()
+        except Exception as e:
             response_json = {"Exception raised": e}
             response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
         return Response(data=response_json, status=response_status)
