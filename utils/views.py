@@ -89,3 +89,42 @@ class DateConversionViewSet(viewsets.ViewSet):
     @staticmethod
     def destroy(request, pk=None):
         return Response(data={":)"})
+
+
+class DateToWeekViewSet(viewsets.ViewSet):
+    queryset = DateConversion.objects.all()
+    #                         Year      Month       day
+    lookup_value_regex = '([0-9]{4})-([0-9]{2})-([0-9]{2})'
+
+    @staticmethod
+    def list(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def create(request):
+        return Response(data={":)"})
+
+    @staticmethod
+    def retrieve(request, pk=None):
+        date = datetime.strptime(pk, '%Y-%m-%d')
+        try:
+            date_object = DateConversion.objects.get(date=date)
+            serialized_dates = DateConversionSerializer(date_object).data
+            response_json = serialized_dates
+            response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_json = {"Exception raised": e}
+            response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response(data=response_json, status=response_status)
+
+    @staticmethod
+    def update(request, pk=None):
+        return Response(data={":)"})
+
+    @staticmethod
+    def partial_update(request, pk=None):
+        return Response(data={":)"})
+
+    @staticmethod
+    def destroy(request, pk=None):
+        return Response(data={":)"})

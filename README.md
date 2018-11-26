@@ -591,3 +591,17 @@ STATUS CODE 200
 
 {"Exception raised": e} STATUS CODE 500
 ```
+
+##### DateToWeek: [http://127.0.0.1:8000/dateToWeek/yyyy-mm-dd](http://127.0.0.1:8000/dateToWeek/yyyy-mm-dd)
+
+- methods allowed: GET
+- pk: yyy-mm-dd
+
+- Response format: 
+``` 
+{"date":"2018-02-02","week":423,"sunday_date":"2018-02-04"}
+
+STATUS CODE 200
+
+{"Exception raised": e} STATUS CODE 500
+```

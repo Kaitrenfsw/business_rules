@@ -35,6 +35,7 @@ router.register(r'userVote', user_preferences_views.UserVotesViewSet)
 router.register(r'sourceVotes', user_preferences_views.SourceVotesViewSet)
 router.register(r'newVotes', user_preferences_views.NewVotesViewSet)
 router.register(r'topicStats', user_preferences_views.TopicStatsViewSet)
+router.register(r'dateToWeek', utils_views.DateToWeekViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
