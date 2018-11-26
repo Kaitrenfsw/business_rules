@@ -59,8 +59,8 @@ class DateConversionViewSet(viewsets.ViewSet):
     @staticmethod
     def retrieve(request, pk=None):
         response_json = []
-        start_date = datetime.strptime(pk, '%Y-%m-%d')
-        end_date = start_date + timedelta(weeks=24)
+        end_date = datetime.strptime(pk, '%Y-%m-%d')
+        start_date = end_date - timedelta(weeks=23)
         try:
             # Get dates for 6 months
             date_object = DateConversion.objects.filter(date__range=(start_date.date(), end_date.date()))
